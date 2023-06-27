@@ -10,7 +10,7 @@
 //! - Linux/MacOS build tests
 
 // Hide debug console in Windows build
-#![cfg_attr(target_os = "windows",windows_subsystem = "windows")]
+#![cfg_attr(target_os = "windows", windows_subsystem = "windows")]
 
 use game::{Game, GameState};
 use raylib::prelude::*;
