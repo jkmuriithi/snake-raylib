@@ -1,13 +1,16 @@
 //! # Snake
 //!
-//! `snake-raylib` is an implementation of the classic arcade game Snake with
-//! [raylib-rs](https://docs.rs/raylib/latest/raylib/index.html#).
+//! `snake-raylib` is a simple implementation of the classic arcade game Snake
+//! using [raylib-rs](https://docs.rs/raylib/latest/raylib/index.html#).
+//!
+//! *Controls:* `W`, `A`, `S`, `D` to change direction. Left-click to restart game.
 //!
 //! **Author:** Jude Muriithi (GitHub: [jkmuriithi](https://github.com/jkmuriithi))
 //!
 //! **TODO:**
 //! - Configuration file system for in-game constants
 //! - Linux/MacOS build tests
+//!
 
 // Hide debug console in Windows build
 #![cfg_attr(target_os = "windows", windows_subsystem = "windows")]
@@ -24,13 +27,13 @@ const SCREEN_WIDTH: i32 = 720;
 const SCREEN_HEIGHT: i32 = 480;
 
 /// Horizontal pixel offset of the final score.
-const SCORE_OFFSET_X: i32 = 140;
+const SCORE_SCREEN_OFFSET_X: i32 = 140;
 
 /// Additional horizontal pixel offset for each digit in the final score.
-const SCORE_OFFSET_DELTA: i32 = 20;
+const SCORE_SCREEN_OFFSET_DELTA: i32 = 20;
 
 /// Vertical pixel offset of the final score.
-const SCORE_OFFSET_Y: i32 = 190;
+const SCORE_SCREEN_OFFSET_Y: i32 = 190;
 
 /// Starts a new game session.
 fn main() {
@@ -50,24 +53,30 @@ fn main() {
                 game.draw(&mut d);
             }
             GameState::ENDED => {
-                let mut d = rl.begin_drawing(&thread);
-                let score = game.score();
-
-                // Draw final score in the middle of the screen
-                d.clear_background(Color::GRAY);
-                let text = format!("Score: {}", score);
-                let digit_offset = if score == 0 {
-                    SCORE_OFFSET_DELTA
+                if rl.is_mouse_button_pressed(MouseButton::MOUSE_LEFT_BUTTON) {
+                    game = Game::init();
+                    game.draw(&mut rl.begin_drawing(&thread));
                 } else {
-                    (score as f64).log10() as i32 * SCORE_OFFSET_DELTA
-                };
-                d.draw_text(
-                    &text,
-                    SCORE_OFFSET_X - digit_offset,
-                    SCORE_OFFSET_Y,
-                    100,
-                    Color::BLACK,
-                );
+                    let mut d = rl.begin_drawing(&thread);
+                    let score = game.score();
+
+                    // Draw final score in the middle of the screen
+                    d.clear_background(Color::GRAY);
+                    let text = format!("Score: {}", score);
+                    let digit_offset = if score == 0 {
+                        SCORE_SCREEN_OFFSET_DELTA
+                    } else {
+                        (score as f64).log10() as i32
+                            * SCORE_SCREEN_OFFSET_DELTA
+                    };
+                    d.draw_text(
+                        &text,
+                        SCORE_SCREEN_OFFSET_X - digit_offset,
+                        SCORE_SCREEN_OFFSET_Y,
+                        100,
+                        Color::BLACK,
+                    );
+                }
             }
         }
     }

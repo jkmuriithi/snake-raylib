@@ -66,14 +66,18 @@ impl Game {
             "screen height must be divisible by grid scale"
         );
 
-        Game {
+        let mut g = Game {
             state: GameState::RUNNING,
             tick_counter: TickCounter::start(TICKS_PER_SECOND),
             rng: rand::thread_rng(),
             score: 0,
             snake: Snake::new(Color::GREEN, Color::DARKGREEN),
             food: Vector2 { x: 0.0, y: 0.0 },
-        }
+        };
+
+        g.move_food();
+
+        g
     }
 
     fn move_food(&mut self) {
