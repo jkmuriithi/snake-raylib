@@ -18,10 +18,8 @@ const TICKS_PER_SECOND: u128 = 10;
 const GRID_SCALE: i32 = 30;
 
 /// [Vector2] representation of [`GRID_SCALE`].
-const GRID_SQUARE: Vector2 = Vector2 {
-    x: GRID_SCALE as f32,
-    y: GRID_SCALE as f32,
-};
+const GRID_SQUARE: Vector2 =
+    Vector2 { x: GRID_SCALE as f32, y: GRID_SCALE as f32 };
 
 /// Number of vertical columns in the on-screen grid.
 const COLS: i32 = SCREEN_WIDTH / GRID_SCALE;

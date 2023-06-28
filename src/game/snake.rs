@@ -146,11 +146,7 @@ impl Snake {
 
     pub fn draw(&self, d: &mut RaylibDrawHandle) {
         for i in 0..self.segments.len() {
-            let color = if i == 0 {
-                self.head_color
-            } else {
-                self.tail_color
-            };
+            let color = if i == 0 { self.head_color } else { self.tail_color };
             d.draw_rectangle_v(self.segments[i], GRID_SQUARE, color)
         }
     }

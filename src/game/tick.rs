@@ -19,11 +19,8 @@ impl TickCounter {
     }
 
     pub fn is_next_tick(&mut self) -> bool {
-        let curr = self
-            .start
-            .elapsed()
-            .as_nanos()
-            .saturating_div(self.nanos_per_tick);
+        let curr =
+            self.start.elapsed().as_nanos().saturating_div(self.nanos_per_tick);
 
         if curr > self.tick {
             self.tick = curr;
