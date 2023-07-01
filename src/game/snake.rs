@@ -20,11 +20,11 @@ enum Direction {
 }
 impl Direction {
     const fn v(&self) -> Vector2 {
-        match self {
-            &Self::UP => Vector2 { x: 0.0, y: -1.0 },
-            &Self::DOWN => Vector2 { x: 0.0, y: 1.0 },
-            &Self::LEFT => Vector2 { x: -1.0, y: 0.0 },
-            &Self::RIGHT => Vector2 { x: 1.0, y: 0.0 },
+        match *self {
+            Self::UP => Vector2 { x: 0.0, y: -1.0 },
+            Self::DOWN => Vector2 { x: 0.0, y: 1.0 },
+            Self::LEFT => Vector2 { x: -1.0, y: 0.0 },
+            Self::RIGHT => Vector2 { x: 1.0, y: 0.0 },
         }
     }
 }
@@ -79,7 +79,7 @@ impl Snake {
     }
 
     pub fn handle_input(&mut self, input: Option<KeyboardKey>) {
-        if let None = input {
+        if input.is_none() {
             return;
         }
 
